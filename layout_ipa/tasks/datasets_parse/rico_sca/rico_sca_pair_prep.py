@@ -19,9 +19,9 @@ class PrepareRicoScaPair(Task):
 
         Returns:
             Dict: preprocessed dict in the following format:
-            
+
             {
-            "id_query": id of the query (instruction)    
+            "id_query": id of the query (instruction)
             instruction: NL intruction,
             ui: DICT:
                     text: text of the ui element,
@@ -39,7 +39,7 @@ class PrepareRicoScaPair(Task):
         """
 
         parsed_data = dict()
-        logger.info("Preprocessing Rico SCA dataset")
+        logger.info(f"Preprocessing Rico SCA dataset from {file_location}")
         with open(file_location, "r") as f:
             input_data = json.load(f)
 
@@ -51,7 +51,8 @@ class PrepareRicoScaPair(Task):
         total_ui_elements = 0
         largest_text = 0
 
-        tokenizer = AutoTokenizer.from_pretrained("microsoft/layoutlm-base-uncased")
+        tokenizer = AutoTokenizer.from_pretrained(
+            "microsoft/layoutlm-base-uncased")
         mapping_query = dict()
         for _, screen_info in input_data.items():
             ui_elements_dict = dict()

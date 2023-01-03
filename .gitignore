@@ -189,3 +189,7 @@ samples/
 *.zip
 .noseids
 blub
+
+
+# data files too large for github
+data/
