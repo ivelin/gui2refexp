@@ -24,7 +24,8 @@ class LayoutLMPair(Task):
         super(LayoutLMPair, self).__init__(**kwargs)
         self.per_gpu_batch_size = kwargs.get("per_gpu_batch_size", 32)
         self.cuda = kwargs.get("cuda", True)
-        self.gradient_accumulation_steps = kwargs.get("gradient_accumulation_steps", 1)
+        self.gradient_accumulation_steps = kwargs.get(
+            "gradient_accumulation_steps", 1)
         self.num_train_epochs = kwargs.get("num_train_epochs", 5)
         self.learning_rate = kwargs.get("learning_rate", 1e-5)
         self.weight_decay = kwargs.get("weight_decay", 0.0)
@@ -78,7 +79,8 @@ class LayoutLMPair(Task):
         outputs = {}
         if mode == "train":
             logger.info("Running train mode")
-            bert_config = AutoConfig.from_pretrained(bert_model, num_labels=num_labels)
+            bert_config = AutoConfig.from_pretrained(
+                bert_model, num_labels=num_labels)
             model = LayoutLMForSequenceClassification.from_pretrained(
                 bert_model, config=bert_config
             )
@@ -251,7 +253,8 @@ class LayoutLMPair(Task):
                     global_step += 1
 
                     if self.logging_steps > 0 and global_step % self.logging_steps == 0:
-                        loss_scalar = (tr_loss - logging_loss) / self.logging_steps
+                        loss_scalar = (tr_loss - logging_loss) / \
+                            self.logging_steps
                         learning_rate_scalar = scheduler.get_lr()[0]
                         epoch_iterator.set_description(
                             f"Loss :{loss_scalar} LR: {learning_rate_scalar}"
@@ -280,7 +283,8 @@ class LayoutLMPair(Task):
                     )  # Take care of distributed/parallel training
                     model_to_save.save_pretrained(output_dir)
 
-                    torch.save(self.args, os.path.join(output_dir, "training_args.bin"))
+                    torch.save(self.args, os.path.join(
+                        output_dir, "training_args.bin"))
                     logger.info(f"Saving model checkpoint to {output_dir}")
                     if save_optimizer:
                         torch.save(
@@ -356,7 +360,8 @@ class LayoutLMPair(Task):
                     all_index, batch[5].detach().cpu().numpy(), axis=0
                 )
 
-                all_ui = np.append(all_ui, ui_positions.detach().cpu().numpy(), axis=0)
+                all_ui = np.append(
+                    all_ui, ui_positions.detach().cpu().numpy(), axis=0)
         eval_loss = eval_loss / nb_eval_steps
 
         score = None
