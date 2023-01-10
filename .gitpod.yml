@@ -1,6 +1,9 @@
 
 tasks:
   - init: pip install -r requirements.txt
+    command: |
+      git config --global credential.helper "cache --timeout=3600"
+
 
 
 
