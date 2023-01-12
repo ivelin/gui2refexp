@@ -193,3 +193,6 @@ blub
 
 # data files too large for github
 data/
+
+# misc files
+ui_refexp_huggingfacehub/**
